@@ -18,9 +18,26 @@ mod assert {
     }
 
     #[test]
-    #[should_panic]
+    #[should_panic(expected = "I'm gonna fail!")]
     fn assert_is_true_fail() {
         assert_is_true!(false, "I'm gonna fail!");
+    }
+
+    #[test]
+    #[should_panic(expected = "I'm gonna fail!")]
+    fn assert_is_true_fail_format() {
+        assert_is_true!(false, "I'm gonna {}!", "fail");
+    }
+
+    #[assert(message = "Oh no!")]
+    fn has_custom_message(val: bool) -> bool {
+        val
+    }
+
+    #[test]
+    #[should_panic(expected = "Oh no!")]
+    fn assert_has_custom_message() {
+        assert_has_custom_message!(false);
     }
 
     #[assert]
@@ -93,9 +110,15 @@ mod assert_eq {
     }
 
     #[test]
-    #[should_panic]
+    #[should_panic(expected = "1*2 != 1")]
     fn assert_eq_if_doubled_fail() {
         assert_eq_if_doubled!(1, 1, "1*2 != 1");
+    }
+
+    #[test]
+    #[should_panic(expected = "1*2 != 1")]
+    fn assert_eq_if_doubled_fail_format() {
+        assert_eq_if_doubled!(1, 1, "{}*2 != {}", 1, 1);
     }
 
     #[assert_eq]
