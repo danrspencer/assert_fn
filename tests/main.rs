@@ -1,4 +1,4 @@
-use assert_fn::{assert, assert_eq};
+use assert_fn::{assert_fn, assert_eq_fn};
 
 #[derive(Debug)]
 struct Error {}
@@ -6,7 +6,7 @@ struct Error {}
 mod assert {
     use super::*;
 
-    #[assert]
+    #[assert_fn]
     fn is_true(val: bool) -> bool {
         val
     }
@@ -29,7 +29,7 @@ mod assert {
         assert_is_true!(false, "I'm gonna {}!", "fail");
     }
 
-    #[assert(message = "Oh no!")]
+    #[assert_fn(message = "Oh no!")]
     fn has_custom_message(val: bool) -> bool {
         val
     }
@@ -40,7 +40,7 @@ mod assert {
         assert_has_custom_message!(false);
     }
 
-    #[assert]
+    #[assert_fn]
     fn both_true(val1: bool, val2: bool) -> bool {
         val1 && val2
     }
@@ -51,7 +51,7 @@ mod assert {
         assert_both_true!(true, true, "with text");
     }
 
-    #[assert]
+    #[assert_fn]
     async fn is_true_async(val: bool) -> bool {
         val
     }
@@ -62,7 +62,7 @@ mod assert {
         assert_is_true_async!(true, "with text").await;
     }
 
-    #[assert]
+    #[assert_fn]
     fn is_true_result(val: bool) -> Result<bool, Error> {
         Ok(val)
     }
@@ -77,7 +77,7 @@ mod assert {
         Ok(())
     }
 
-    #[assert]
+    #[assert_fn]
     async fn is_true_result_async(val: bool) -> Result<bool, Error> {
         Ok(val)
     }
@@ -96,7 +96,7 @@ mod assert {
 mod assert_eq {
     use super::*;
 
-    #[assert_eq]
+    #[assert_eq_fn]
     fn eq_if_doubled(a: usize, b: usize) -> (usize, usize) {
         (a * 2, b)
     }
@@ -121,7 +121,7 @@ mod assert_eq {
         assert_eq_if_doubled!(1, 1, "{}*2 != {}", 1, 1);
     }
 
-    #[assert_eq]
+    #[assert_eq_fn]
     fn eq_to_summed(a: usize, b: usize, c: usize, d: usize, sum: usize) -> (usize, usize) {
         (a + b + c + d, sum)
     }
@@ -134,7 +134,7 @@ mod assert_eq {
         assert_eq_to_summed!(1, 2, 3, 4, 10, "with text");
     }
 
-    #[assert_eq]
+    #[assert_eq_fn]
     async fn eq_if_doubled_async(a: usize, b: usize) -> (usize, usize) {
         (a * 2, b)
     }
@@ -145,7 +145,7 @@ mod assert_eq {
         assert_eq_if_doubled_async!(1, 2, "with text").await;
     }
 
-    #[assert_eq]
+    #[assert_eq_fn]
     fn eq_if_doubled_result(a: usize, b: usize) -> Result<(usize, usize), Error> {
         Ok((a * 2, b))
     }
@@ -160,7 +160,7 @@ mod assert_eq {
         Ok(())
     }
 
-    #[assert_eq]
+    #[assert_eq_fn]
     async fn eq_if_doubled_result_async(a: usize, b: usize) -> Result<(usize, usize), Error> {
         Ok((a * 2, b))
     }

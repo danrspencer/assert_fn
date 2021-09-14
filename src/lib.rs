@@ -3,12 +3,12 @@ use proc_macro::TokenStream;
 use syn::{parse_macro_input, AttributeArgs, ItemFn, Lit, Meta, NestedMeta, ReturnType, Type};
 
 #[proc_macro_attribute]
-pub fn assert_eq(args: TokenStream, item: TokenStream) -> TokenStream {
+pub fn assert_eq_fn(args: TokenStream, item: TokenStream) -> TokenStream {
     create_assert_macro(AssertType::Eq, args, item)
 }
 
 #[proc_macro_attribute]
-pub fn assert(args: TokenStream, item: TokenStream) -> TokenStream {
+pub fn assert_fn(args: TokenStream, item: TokenStream) -> TokenStream {
     create_assert_macro(AssertType::True, args, item)
 }
 
