@@ -24,5 +24,7 @@ jobs:
       run: cargo clippy --all-targets --all-features -- -D warnings
     - name: Build
       run: cargo build --verbose
-    - name: Run tests
+    - name: Tests
       run: cargo test --verbose
+    - name: Publish (DryRun)
+      run: cargo publish --dry-run
