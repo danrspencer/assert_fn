@@ -27,4 +27,4 @@ jobs:
     - name: Tests
       run: cargo test --verbose
     - name: Publish (DryRun)
-      run: cd assert_fn && cargo publish --dry-run --no-verify
+      run: cd assert_fn && cargo publish --dry-run
