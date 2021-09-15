@@ -1,4 +1,6 @@
 [![Rust](https://github.com/danrspencer/assert_fn/actions/workflows/rust.yml/badge.svg)](https://github.com/danrspencer/assert_fn/actions/workflows/rust.yml)
+[![crates.io](https://img.shields.io/crates/v/assert_fn)](https://crates.io/crates/assert_fn)
+[![docs.rs](https://img.shields.io/docsrs/assert_fn)](https://docs.rs/assert_fn/)
 # assert_fn
 
 ## Why?
@@ -60,6 +62,8 @@ fn assert_eq_if_doubled() {
 ```
 
 In both of these examples the failure will be logged against the line in your test on which the error originated instead of inside a line inside the `eq_if_doubled`.
+
+See the [Rust docs](https://docs.rs/assert_fn/) for lots more examples.
 
 ## Trouble Shooting
 
