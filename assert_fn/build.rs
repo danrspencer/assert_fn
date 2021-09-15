@@ -24,7 +24,7 @@ fn main() {
     if is_publishing {
         // If we're publishing move it into the published path so that it can be found in the
         // published artefact
-        fs::write(target_path.clone(), readme)
+        fs::write(published_readme_path.clone(), readme)
             .unwrap_or_else(|_| panic!("Could not write README.md to {}", published_readme_path));
     }
 }
