@@ -18,13 +18,13 @@ fn main() {
         "{}/README.md",
         std::env::var("OUT_DIR").expect("OUT_DIR not set")
     );
-    fs::write(target_path.clone(), readme.clone())
+    fs::write(&target_path, readme.clone())
         .unwrap_or_else(|_| panic!("Could not write README.md to {}", target_path));
 
     if is_publishing {
         // If we're publishing move it into the published path so that it can be found in the
         // published artefact
-        fs::write(published_readme_path.clone(), readme)
+        fs::write(published_readme_path, readme)
             .unwrap_or_else(|_| panic!("Could not write README.md to {}", published_readme_path));
     }
 }
