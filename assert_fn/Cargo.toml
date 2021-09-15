@@ -1,0 +1,23 @@
+[package]
+name = "assert_fn"
+version = "0.1.0"
+edition = "2018"
+authors = ["Dan Spencer <danrspencer@gmail.com>"]
+description = "A proc macro for turning test helper functions into assert! style macros"
+readme = "../README.md"
+homepage = "https://github.com/danrspencer/assert_fn"
+repository = "https://github.com/danrspencer/assert_fn"
+license = "MIT"
+license-file = "../LICENSE"
+keywords = ["assert", "test"]
+categories = ["development-tools", "development-tools::testing"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "1.0", features = ["full"] }
+
+[dev-dependencies]
+test_helpers = { path = "../test_helpers" }
+tokio-test = "0.4"

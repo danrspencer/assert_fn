@@ -1,17 +1,5 @@
-[package]
-name = "assert_fn"
-version = "0.1.0"
-edition = "2018"
-authors = ["Dan Spencer <danrspen@gmail.com>"]
-
-[lib]
-proc-macro = true
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-syn = { version = "1.0", features = ["full"] }
-quote = "1.0"
-
-[dev-dependencies]
-tokio = { version = "1", features = ["full"] }
+[workspace]
+members = [
+    "assert_fn",
+    "test_helpers"
+]
