@@ -8,21 +8,19 @@
 The `assert_fn` library supplies a proc macro which can be used to turn test helper functions into `assert!` style macros. It is designed to be used where your test helper is performing an assert for you, for example: 
 
 ```rust
-fn assert_eq_if_doubled() {
-  check_eq_if_doubled(1, 2);
-  check_eq_if_doubled(2, 4);
-  check_eq_if_doubled(4, 8);
-}
- 
 fn check_eq_if_doubled(a: usize, b: usize) {
-  assert!(a * 2 == b)
+  assert_eq!(a * 2, b)
 }
+
+check_eq_if_doubled(1, 2);
+check_eq_if_doubled(2, 4);
+check_eq_if_doubled(4, 8);
 ```
 
 There are two reasons you'd want to do this:
 
 1. Readability - `assert!` style macros are easy to spot in a test. They help others reading your test understand that this is where you are asserting correctness.
-2. Traceability - In the above example, if you got a failure in one of your calls to `check_eq_if_doubled` the panic would originate on line 9, rather than the line in your test which triggered the failure. In more complex tests this can make it hard to track down where the test is broken.
+2. Traceability - In the above example, if you got a failure in one of your calls to `check_eq_if_doubled` the panic would originate on line 2, rather than the line which triggered the failure. In more complex tests this can make it hard to track down where the test is broken.
 
 Using `assert_fn` the above can be written as:
 
@@ -34,11 +32,9 @@ fn eq_if_doubled(a: usize, b: usize) -> bool {
     a * 2 == b
 }
 
-fn assert_eq_if_doubled() {
-  assert_eq_if_doubled!(1, 2);
-  assert_eq_if_doubled!(2, 4);
-  assert_eq_if_doubled!(4, 8);
-}
+assert_eq_if_doubled!(1, 2);
+assert_eq_if_doubled!(2, 4);
+assert_eq_if_doubled!(4, 8);
 ```
 
 Or if you want to use `assert_eq!` instead of `assert!` so you can see what the values were, just return a tuple instead of a bool:
@@ -51,11 +47,9 @@ fn eq_if_doubled(a: usize, b: usize) -> (usize, usize) {
     (a * 2, b)
 }
 
-fn assert_eq_if_doubled() {
-  assert_eq_if_doubled!(1, 2);
-  assert_eq_if_doubled!(2, 4);
-  assert_eq_if_doubled!(4, 8);
-}
+assert_eq_if_doubled!(1, 2);
+assert_eq_if_doubled!(2, 4);
+assert_eq_if_doubled!(4, 8);
 ```
 
 In both of these examples the failure will be logged against the line in your test on which the error originated instead of inside a line inside the `eq_if_doubled`.
