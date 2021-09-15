@@ -11,7 +11,12 @@ fn main() {
 
     println!("cargo:rerun-if-changed={}", readme_path);
 
-    let readme = fs::read_to_string(readme_path).unwrap_or_else(|_| panic!("Could not read {}", readme_path));
-    let target_path = format!("{}/README.md", std::env::var("OUT_DIR").expect("OUT_DIR not set"));
-    fs::write(target_path.clone(), readme).unwrap_or_else(|_| panic!("Could not write README.md to {}",target_path));
+    let readme = fs::read_to_string(readme_path)
+        .unwrap_or_else(|_| panic!("Could not read {}", readme_path));
+    let target_path = format!(
+        "{}/README.md",
+        std::env::var("OUT_DIR").expect("OUT_DIR not set")
+    );
+    fs::write(target_path.clone(), readme)
+        .unwrap_or_else(|_| panic!("Could not write README.md to {}", target_path));
 }
