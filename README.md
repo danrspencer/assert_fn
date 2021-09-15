@@ -1,6 +1,6 @@
 [![Rust](https://github.com/danrspencer/assert_fn/actions/workflows/rust.yml/badge.svg)](https://github.com/danrspencer/assert_fn/actions/workflows/rust.yml)
 [![crates.io](https://img.shields.io/crates/v/assert_fn)](https://crates.io/crates/assert_fn)
-[![docs.rs](https://img.shields.io/docsrs/assert_fn)](https://docs.rs/assert_fn/)
+[![docs.rs](https://img.shields.io/docsrs/assert_fn?label=docs.io)](https://docs.rs/assert_fn/)
 # assert_fn
 
 ## Why?
