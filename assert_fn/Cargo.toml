@@ -8,7 +8,6 @@ readme = "../README.md"
 homepage = "https://github.com/danrspencer/assert_fn"
 repository = "https://github.com/danrspencer/assert_fn"
 license = "MIT"
-license-file = "../LICENSE"
 keywords = ["assert", "test"]
 categories = ["development-tools", "development-tools::testing"]
 
