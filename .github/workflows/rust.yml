@@ -53,4 +53,4 @@ jobs:
       env:
         CRATES_IO_SECRET: ${{ secrets.SuperSecret }}
       run: |
-        cargo publish --token="$CRATES_IO_SECRET"
+        cargo publish --manifest-path assert_fn/Cargo.toml --token="$CRATES_IO_SECRET"
