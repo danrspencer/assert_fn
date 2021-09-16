@@ -1,6 +1,6 @@
 [package]
 name = "assert_fn"
-version = "1.0.1"
+version = "1.0.2"
 edition = "2018"
 authors = ["Dan Spencer <danrspencer@gmail.com>"]
 description = "A proc macro for turning test helper functions into assert! style macros"
