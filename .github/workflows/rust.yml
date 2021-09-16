@@ -16,18 +16,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Cargo Cache
-      id: cargo-cache
-      uses: actions/cache@v2
+    - uses: actions/cache@v2
       with:
-        path: ~/.cargo
-        key: ${{ runner.os }}-Cargo
-    - name: Rust Cache
-      id: rust-cache
-      uses: actions/cache@v2
-      with:
-        path: target
-        key: ${{ runner.os }}-Rust
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
     - name: Check
       run: cargo check --all-targets --all-features
     - name: Fmt
