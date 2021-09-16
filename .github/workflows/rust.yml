@@ -16,6 +16,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Cache
+      id: rust-cache
+      uses: actions/cache@v2
+      with:
+        path: target
+        key: ${{ runner.os }}-rust
     - name: Check
       run: cargo check --all-targets --all-features
     - name: Fmt
@@ -28,9 +34,3 @@ jobs:
       run: cargo test --verbose
     - name: Publish (DryRun)
       run: cd assert_fn && cargo publish --dry-run
-    - name: Cache
-      id: rust-cache
-      uses: actions/cache@v2
-      with:
-        path: target
-        key: ${{ runner.os }}-rust
