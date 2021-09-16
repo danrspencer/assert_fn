@@ -1,13 +1,13 @@
 [package]
 name = "assert_fn"
-version = "0.1.5"
+version = "0.2.1"
 edition = "2018"
 authors = ["Dan Spencer <danrspencer@gmail.com>"]
 description = "A proc macro for turning test helper functions into assert! style macros"
 readme = "README.md"
 homepage = "https://github.com/danrspencer/assert_fn"
 repository = "https://github.com/danrspencer/assert_fn"
-license-file = "LICENSE"
+license = "MIT"
 keywords = ["assert", "test"]
 categories = ["development-tools", "development-tools::testing"]
 
