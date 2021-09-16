@@ -19,7 +19,12 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: |
-          ~/.cargo/
+          ~/.cargo/bin/
+          ~/.cargo/binary-cache/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          ~/.cargo/script-cache/
           target/
         key: Cargo-${{ runner.os }}
     - name: Cargo Install
