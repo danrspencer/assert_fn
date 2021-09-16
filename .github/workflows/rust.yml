@@ -19,12 +19,9 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: |
-          ~/.cargo/bin/
-          ~/.cargo/registry/index/
-          ~/.cargo/registry/cache/
-          ~/.cargo/git/db/
+          ~/.cargo/
           target/
-        key: ${{ runner.os }}-cargo
+        key: Cargo-${{ runner.os }}
     - name: Cargo Install
       run: cargo install cargo-script cargo-workspaces
     - name: Check
