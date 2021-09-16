@@ -132,7 +132,6 @@ pub fn assert_fn(args: TokenStream, item: TokenStream) -> TokenStream {
 
     format!(
         r#"
-        #[macro_export]
         macro_rules! assert_{fn_name} {{
             ({params_trimmed}$(,)?) => {{ {async_block} {{
                 let result = {fn_name}({values}){dot_await};
