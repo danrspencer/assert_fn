@@ -365,17 +365,19 @@ fn get_message(args: &[NestedMeta]) -> Option<AssertMessage> {
                     .map(|seg| seg.ident.to_string())
                     .collect::<Vec<_>>();
 
-                let message = if args.is_empty() {
-                    format!(", \"{}\"", message)
+                let message_args = if args.is_empty() {
+                    "".to_string()
                 } else {
-                    let used_args = args
+                    // Create a list of named arguments for use in the `assert!`
+                    format!(", {}", args
                         .iter()
                         .filter(|arg| *arg != "_")
                         .map(|arg| format!("{}={}", arg, arg))
                         .collect::<Vec<_>>()
-                        .join(", ");
-                    format!(", \"{}\", {}", message, used_args)
+                        .join(", "))
                 };
+
+                let message = format!(", \"{}\"{}", message, message_args);
 
                 AssertMessage { message, args }
             })
@@ -384,11 +386,11 @@ fn get_message(args: &[NestedMeta]) -> Option<AssertMessage> {
 
 fn get_macro_export(args: &[NestedMeta]) -> String {
     args.iter()
-        .filter_map(|item| match item {
-            NestedMeta::Meta(Meta::Path(path)) => Some(path),
+        .find_map(|item| match item {
+            NestedMeta::Meta(Meta::Path(path)) => path.segments.last(),
             _ => None,
         })
-        .find_map(|path| path.segments.last().filter(|seg| seg.ident == "export"))
+        .filter(|seg| seg.ident == "export")
         .map(|_| "#[macro_export]".to_string())
         .unwrap_or_default()
 }
