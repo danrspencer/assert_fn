@@ -369,12 +369,14 @@ fn get_message(args: &[NestedMeta]) -> Option<AssertMessage> {
                     "".to_string()
                 } else {
                     // Create a list of named arguments for use in the `assert!`
-                    format!(", {}", args
-                        .iter()
-                        .filter(|arg| *arg != "_")
-                        .map(|arg| format!("{}={}", arg, arg))
-                        .collect::<Vec<_>>()
-                        .join(", "))
+                    format!(
+                        ", {}",
+                        args.iter()
+                            .filter(|arg| *arg != "_")
+                            .map(|arg| format!("{}={}", arg, arg))
+                            .collect::<Vec<_>>()
+                            .join(", ")
+                    )
                 };
 
                 let message = format!(", \"{}\"{}", message, message_args);
