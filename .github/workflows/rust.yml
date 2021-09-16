@@ -42,7 +42,7 @@ jobs:
     - name: Test
       run: cargo test
     - name: Publish (DryRun)
-      run: cd assert_fn && cargo publish --dry-run && cd --
+      run: cd assert_fn && cargo publish --dry-run && cd -
     - name: Bump Version
       run: |
         cargo install cargo-script cargo-workspaces
