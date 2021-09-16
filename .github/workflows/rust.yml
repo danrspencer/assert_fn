@@ -49,3 +49,9 @@ jobs:
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'danrspen@gmail.com'
         cargo script bin/bump_version.rs
+    - name: Publish
+      run
+      env:
+        CRATES_IO_SECRET: ${{ secrets.SuperSecret }}
+      run: |
+        cargo publish --token="$env:CRATES_IO_SECRET"
