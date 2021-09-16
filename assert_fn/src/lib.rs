@@ -101,7 +101,7 @@ use syn::{
 /// }
 /// ```
 ///
-/// Finally, as demonstrated in the Result example, the return value of your assert function is returned
+/// As demonstrated in the Result example, the return value of your assert function is returned
 /// from the macro. This allows you to get back additional useful values from your assert to use elsewhere
 /// in your test.
 /// ```
@@ -114,6 +114,15 @@ use syn::{
 /// let (_, _, value) = assert_is_ten!(10);
 /// assert_eq!(&value, "Some other useful value")
 /// ```
+///
+/// If you want to export the macro for use else where add `export` to the macro call.
+/// ```
+/// # use assert_fn::assert_fn;
+/// #[assert_fn(message("Failed!"), export)]
+/// fn is_ten(num: usize) -> (usize, usize) {
+///     (num, 10)
+/// }
+/// ```
 pub fn assert_fn(args: TokenStream, item: TokenStream) -> TokenStream {
     let raw_item = item.clone();
     let item = parse_macro_input!(item as ItemFn);
@@ -123,6 +132,7 @@ pub fn assert_fn(args: TokenStream, item: TokenStream) -> TokenStream {
     let assert_message = get_message(&args);
 
     let fn_name = item.sig.ident.to_string();
+    let macro_export = get_macro_export(&args);
     let (params, values) = get_values_and_params(&item);
     let (async_block, dot_await) = get_async(&item);
     let tuple_destructure = get_tuple_destructure(&assert_message, &return_type);
@@ -132,6 +142,7 @@ pub fn assert_fn(args: TokenStream, item: TokenStream) -> TokenStream {
 
     format!(
         r#"
+        {macro_export}
         macro_rules! assert_{fn_name} {{
             ({params_trimmed}$(,)?) => {{ {async_block} {{
                 let result = {fn_name}({values}){dot_await};
@@ -156,6 +167,7 @@ pub fn assert_fn(args: TokenStream, item: TokenStream) -> TokenStream {
 
         {original_fn}
     "#,
+        macro_export = macro_export,
         fn_name = fn_name,
         params = params,
         params_trimmed = params.trim_end_matches(|c| c == ','),
@@ -368,4 +380,15 @@ fn get_message(args: &[NestedMeta]) -> Option<AssertMessage> {
                 AssertMessage { message, args }
             })
         })
+}
+
+fn get_macro_export(args: &[NestedMeta]) -> String {
+    args.iter()
+        .filter_map(|item| match item {
+            NestedMeta::Meta(Meta::Path(path)) => Some(path),
+            _ => None,
+        })
+        .find_map(|path| path.segments.last().filter(|seg| seg.ident == "export"))
+        .map(|_| "#[macro_export]".to_string())
+        .unwrap_or_default()
 }
