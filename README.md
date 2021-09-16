@@ -54,7 +54,7 @@ assert_eq_if_doubled!(4, 8);
 
 In both of these examples the failure will be logged against the line in your test on which the error originated instead of inside a line inside the `eq_if_doubled`.
 
-See the [Rust docs](https://docs.rs/assert_fn/) for lots more examples.
+See the [Rust docs](https://docs.rs/assert_fn/latest/assert_fn/attr.assert_fn.html) for lots more examples.
 
 ## Trouble Shooting
 
