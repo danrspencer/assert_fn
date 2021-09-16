@@ -48,6 +48,4 @@ jobs:
         cargo install cargo-script cargo-workspaces
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'danrspen@gmail.com'
-        pwd
-        ls
-        ./bin/bump_versions.rs
+        bin/bump_versions.rs
