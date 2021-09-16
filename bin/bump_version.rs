@@ -12,9 +12,9 @@ fn main() {
     println!("Previous commit message was:");
     println!("{}", previous_commit);
 
-    let bump = if previous_commit.to_lowercase().starts_with("major") {
+    let bump = if previous_commit.to_lowercase().starts_with("[major]") {
         "major"
-    } else if previous_commit.to_lowercase().starts_with("minor") {
+    } else if previous_commit.to_lowercase().starts_with("[minor]") {
         "minor"
     } else {
         "patch"
