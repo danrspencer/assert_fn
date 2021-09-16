@@ -42,13 +42,13 @@ jobs:
     - name: Test
       run: cargo test
     - name: Publish (DryRun)
-      run: cd assert_fn && cargo publish --dry-run && cd -
-    - name: test
-      run: pwd
+      run: |
+        cd assert_fn
+        cargo publish --dry-run
+        cd -
     - name: Bump Version
       run: |
         cargo install cargo-script cargo-workspaces
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'danrspen@gmail.com'
-        pwd
         ./bin/bump_versions.rs
