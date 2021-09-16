@@ -51,6 +51,6 @@ jobs:
         cargo script bin/bump_version.rs
     - name: Publish
       env:
-        CRATES_IO_SECRET: ${{ secrets.SuperSecret }}
+        CRATES_IO_SECRET: ${{ secrets.CRATES_IO }}
       run: |
         cargo publish --manifest-path assert_fn/Cargo.toml --token $CRATES_IO_SECRET
