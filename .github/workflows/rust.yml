@@ -25,6 +25,10 @@ jobs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           ~/.cargo/script-cache/
+          ~/.cargo/.crates.toml
+          ~/.cargo/.crates2.json
+          ~/.cargo/.package-cache
+          ~/.cargo/.rustc_info.json
           target/
         key: Cargo-${{ runner.os }}
     - name: Cargo Install
