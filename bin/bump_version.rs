@@ -20,5 +20,7 @@ fn main() {
         "patch"
     };
 
-    cmd!("cargo workspaces version {}", bump).run().unwrap();
+    println!("Performing {} version bump", bump);
+
+    cmd!("cargo workspaces version {} -y", bump).run().unwrap();
 }

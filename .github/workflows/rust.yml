@@ -24,7 +24,13 @@ jobs:
       run: cargo clippy --all-targets --all-features -- -D warnings
     - name: Build
       run: cargo build --verbose
-    - name: Tests
+    - name: Test
       run: cargo test --verbose
     - name: Publish (DryRun)
       run: cd assert_fn && cargo publish --dry-run
+    - name: Cache
+      id: rust-cache
+      uses: actions/cache@v2
+      with:
+        path: target
+        key: ${{ runner.os }}-rust

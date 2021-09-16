@@ -125,7 +125,7 @@ pub fn assert_fn(args: TokenStream, item: TokenStream) -> TokenStream {
     let fn_name = item.sig.ident.to_string();
     let (params, values) = get_values_and_params(&item);
     let (async_block, dot_await) = get_async(&item);
-    let tuple_destructure = get_tuple_destructure(&assert_message,&return_type);
+    let tuple_destructure = get_tuple_destructure(&assert_message, &return_type);
     let (if_result_open, if_result_close) = get_result_block(&return_type);
     let assert_call = get_assert_call(&return_type);
     let message = assert_message.map(|msg| msg.message).unwrap_or_default();
@@ -272,17 +272,26 @@ fn get_async(item: &ItemFn) -> (String, String) {
     }
 }
 
-fn get_tuple_destructure(assert_message: &Option<AssertMessage>, return_type: &AssertReturnType) -> String {
-    if let Some(mut args) = assert_message.clone().map(|msg| msg.args).filter(|args| ! args.is_empty()) {
+fn get_tuple_destructure(
+    assert_message: &Option<AssertMessage>,
+    return_type: &AssertReturnType,
+) -> String {
+    if let Some(mut args) = assert_message
+        .clone()
+        .map(|msg| msg.args)
+        .filter(|args| !args.is_empty())
+    {
         let tuple_size = match return_type {
-            AssertReturnType::Bool | AssertReturnType::ResultBool => panic!("Tried to use message args on function with boolean return type"),
-            AssertReturnType::Tuple(n) | AssertReturnType::ResultTuple(n) => *n
+            AssertReturnType::Bool | AssertReturnType::ResultBool => {
+                panic!("Tried to use message args on function with boolean return type")
+            }
+            AssertReturnType::Tuple(n) | AssertReturnType::ResultTuple(n) => *n,
         };
 
         // Make sure we have enough destructuring placeholders for the full tuple
         while (args.len() as u8) < tuple_size {
             args.push("_".to_string());
-        };
+        }
         format!("let ({}) = result;", args.join(", "))
     } else {
         "".to_string()
@@ -303,50 +312,61 @@ fn get_result_block(return_type: &AssertReturnType) -> (String, String) {
 fn get_assert_call(return_type: &AssertReturnType) -> String {
     match return_type {
         AssertReturnType::Bool | AssertReturnType::ResultBool => "assert!(result".to_string(),
-        AssertReturnType::Tuple(_) | AssertReturnType::ResultTuple(_) => "assert_eq!(result.0, result.1".to_string(),
+        AssertReturnType::Tuple(_) | AssertReturnType::ResultTuple(_) => {
+            "assert_eq!(result.0, result.1".to_string()
+        }
     }
 }
 
 #[derive(Clone)]
 struct AssertMessage {
     message: String,
-    args: Vec<String>
+    args: Vec<String>,
 }
 
 fn get_message(args: &[NestedMeta]) -> Option<AssertMessage> {
-    args
-        .iter()
+    args.iter()
         .filter_map(|item| match item {
-            NestedMeta::Meta(Meta::List(list) ) => Some(list),
+            NestedMeta::Meta(Meta::List(list)) => Some(list),
             _ => None,
         })
         .filter_map(|list| {
-            list.path.segments.last().filter(|seg| seg.ident == "message").map(|_|list.nested.clone())
+            list.path
+                .segments
+                .last()
+                .filter(|seg| seg.ident == "message")
+                .map(|_| list.nested.clone())
         })
         .find_map(|params| {
             let mut iter = params.into_iter();
             match iter.next() {
                 // The first item in our param list should be the message string literal
                 Some(NestedMeta::Lit(Lit::Str(str))) => Some(str.value()),
-                _ => None
-            }.map(|message| {
+                _ => None,
+            }
+            .map(|message| {
                 // And the rest are message args
-                let args = iter.filter_map(|nested_meta| match nested_meta {
-                    NestedMeta::Meta(Meta::Path(path)) => path.segments.last().cloned(),
-                    _ => None
-                }).map(|seg| seg.ident.to_string()).collect::<Vec<_>>();
+                let args = iter
+                    .filter_map(|nested_meta| match nested_meta {
+                        NestedMeta::Meta(Meta::Path(path)) => path.segments.last().cloned(),
+                        _ => None,
+                    })
+                    .map(|seg| seg.ident.to_string())
+                    .collect::<Vec<_>>();
 
                 let message = if args.is_empty() {
                     format!(", \"{}\"", message)
                 } else {
-                    let used_args = args.iter().filter(|arg| *arg != "_").map(|arg| format!("{}={}", arg, arg)).collect::<Vec<_>>().join(", ");
+                    let used_args = args
+                        .iter()
+                        .filter(|arg| *arg != "_")
+                        .map(|arg| format!("{}={}", arg, arg))
+                        .collect::<Vec<_>>()
+                        .join(", ");
                     format!(", \"{}\", {}", message, used_args)
                 };
 
-                AssertMessage {
-                    message,
-                    args
-                }
+                AssertMessage { message, args }
             })
         })
 }
