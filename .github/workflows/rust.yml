@@ -42,7 +42,7 @@ jobs:
     - name: Test
       run: cargo test
     - name: Publish (DryRun)
-      run: cargo publish --manifest-path assert_fn/Cargo.toml --dry-run
+      run: cargo publish --manifest-path assert_fn/Cargo.toml --dry-run --allow-dirty
     - name: Bump Version
       run: |
         cargo install cargo-script cargo-workspaces
