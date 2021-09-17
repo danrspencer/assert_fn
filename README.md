@@ -56,6 +56,40 @@ In both of these examples the failure will be logged against the line in your te
 
 See the [Rust docs](https://docs.rs/assert_fn/latest/assert_fn/attr.assert_fn.html) for lots more examples.
 
+## API
+
+Supported fields on the `#[assert_fn]` macro.
+
+### `message`
+
+Only supported on functions returning a tuple, or `Result` of a tuple.
+
+Provides a default message when the assert fails. The first item in the list must be a string literal. Additional items in the list are destructured from the returned tuple and can be substituted into the message via named properties. Any unused tuple fields prior to one you wish to use must be noted as a `_`.
+
+Example consuming the third property on a returned tuple.
+
+```rust
+use assert_fn::assert_fn;
+
+#[assert_fn(message("Nope! But {panic}", _, _, panic))]
+fn meaning_of_life(a: usize) -> (usize, usize, String) {
+    (a, 42, "don't panic!".to_string())
+}
+```
+
+### `export`
+
+If the `export` field is supplied to `#[assert_fn]` then `#[macro_export]` is added to your generated macro so it can be used elsewhere.
+
+```rust
+use assert_fn::assert_fn;
+
+#[assert_fn(export)]
+fn is_ten(num: usize) -> (usize, usize) {
+    (num, 10)
+}
+```
+
 ## Trouble Shooting
 
 Because macros have to be defined before they can be used, your helper functions must be declared above the tests you want to use them in. 
