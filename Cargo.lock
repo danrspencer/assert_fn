@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "assert_fn"
-version = "1.0.6"
+version = "1.0.7"
 dependencies = [
  "syn",
  "test_helpers",
@@ -87,7 +87,7 @@ dependencies = [
 
 [[package]]
 name = "test_helpers"
-version = "1.0.6"
+version = "1.0.7"
 
 [[package]]
 name = "tokio"
