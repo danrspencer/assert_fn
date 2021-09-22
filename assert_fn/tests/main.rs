@@ -25,5 +25,5 @@ fn it_can_copy() -> Result<(String, String), ()> {
 
 #[test]
 fn it_can_return_a_result_of_something_that_doesnt_implement_copy() {
-    assert_it_can_copy!("test");
+    assert_it_can_copy!("test").unwrap();
 }
