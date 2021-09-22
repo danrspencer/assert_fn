@@ -17,3 +17,13 @@ fn it_doesnt_require_placeholders_for_every_tuple_value() {
         )
     )
 }
+
+#[assert_fn]
+fn it_can_copy() -> Result<(String, String), ()> {
+    Ok(("Test1".to_string(), "Test1".to_string()))
+}
+
+#[test]
+fn it_can_return_a_result_of_something_that_doesnt_implement_copy() {
+    assert_it_can_copy!("test");
+}

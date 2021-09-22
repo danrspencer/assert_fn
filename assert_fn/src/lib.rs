@@ -314,7 +314,7 @@ fn get_result_block(return_type: &AssertReturnType) -> (String, String) {
         return_type,
         AssertReturnType::ResultBool | AssertReturnType::ResultTuple(_)
     ) {
-        ("if let Ok(result) = result {".to_string(), "}".to_string())
+        ("if let Ok(result) = result.as_ref() {".to_string(), "}".to_string())
     } else {
         ("".to_string(), "".to_string())
     }
